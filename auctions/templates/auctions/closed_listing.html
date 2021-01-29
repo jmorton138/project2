@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h3>{{ message }}</h3>
+<h4>{{ winning }}</h4>
+<ul>
+    <li>Listing: {{ listing.item }}</li>
+    <li>Description: {{ listing.description}}</li>
+    <li>Price: {{ listing.price }}</li>
+    <li>Details: {{ listing.details }}</li>
+    <li>OP: {{listing.author}}</li>
+    <li>category: {{ listing.category }}</li>
+    {% if listing.image %}
+    <img src ="{{ listing.image.url }}" width="200">
+    {% endif %}
+</ul> 
+
+<div class="form-group">
+<form action="{% url 'comment' listing.id %}" method="post">
+    {% csrf_token %}
+    <input type="textarea" name="comment">
+    <input type="submit" value="Leave comment">
+</form>
+</div>
+
+<h5>Comments:</h5>
+<ul>
+    {% for comment in comments %}
+    <li>{{comment.user }}: {{ comment.text }}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
+
